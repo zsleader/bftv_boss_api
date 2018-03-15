@@ -23,10 +23,14 @@ $api->version('v1',[
         'limit' => config('api.rate_limits.sign.limit'),
         'expires' => config('api.rate_limits.sign.expires'),
     ], function($api){
-        //平台方通过换取access_token
-        $api->post('socails/authorizations', 'authorizationsController@socialStore')
-            ->name('api.socails.authorizations.store');
-
-
+        //通过id和secret获取access_token
+        $api->post('socials/authorizations', 'AuthorizationsController@socialStore')
+            ->name('api.socials.authorizations.store');
+        //刷新token
+        $api->put('socials/authorizations/current', 'AuthorizationsController@update')
+            ->name('api.socials.authorizations.update');
+        //删除token
+        $api->delete('socials/authorizations/current', 'AuthorizationsController@destroy')
+            ->name('api.socials.authorizations.destroy');
     });
 });
