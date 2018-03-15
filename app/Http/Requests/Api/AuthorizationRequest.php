@@ -27,5 +27,8 @@ class AuthorizationRequest extends FormRequest
             'vo_id' => 'required|string|length:18',
             'vo_secret' => 'required|string',
         ];
+
+
+
     }
 }
