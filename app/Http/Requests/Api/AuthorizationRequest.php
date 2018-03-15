@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Dingo\Api\Http\FormRequest;
 
 class AuthorizationRequest extends FormRequest
 {
@@ -13,7 +13,7 @@ class AuthorizationRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class AuthorizationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'vo_id' => 'required|string|length:18',
+            'vo_secret' => 'required|string',
         ];
     }
 }
