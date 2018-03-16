@@ -16,7 +16,8 @@ use Illuminate\Http\Request;
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1',[
-    'namespace' => 'App\Http\Controllers\Api'
+    'namespace' => 'App\Http\Controllers\Api',
+    'middleware' => 'serializer:array'
 ], function($api){
     $api->group([
         'middleware' => 'api.throttle',
@@ -32,5 +33,12 @@ $api->version('v1',[
         //删除token
         $api->delete('socials/authorizations/current', 'AuthorizationsController@destroy')
             ->name('api.socials.authorizations.destroy');
+        //需要token验证的接口
+        $api->group(['middleware' => 'api.auth'], function($api){
+            //获取当前接口访问人信息
+            $api->get('socials/info', 'UsersController@me')
+                ->name('api.user.show');
+        });
+
     });
 });
